@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ЗдравДом — центр восстановления здоровья опорно-двигательного аппарата в Краснодаре. Хиропрактика, саунд-хилинг, телесные практики." />
+    <title>@ViewData["Title"] — ЗдравДом</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.2"/>
+                        <path d="M16 6 C16 6, 22 12, 22 18 C22 21.3 19.3 24 16 24 C12.7 24 10 21.3 10 18 C10 12 16 6 16 6Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                        <path d="M10 14 Q16 11 22 14" stroke="currentColor" stroke-width="1" fill="none"/>
+                    </svg>
+                </span>
+                <span class="logo-text">ЗдравДом</span>
+            </a>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="/#services" class="nav-link">Услуги</a>
+                <a href="/#specialists" class="nav-link">Специалисты</a>
+                <a href="/#tariffs" class="nav-link">Тарифы</a>
+                <a href="/#reviews" class="nav-link">Отзывы</a>
+                <a href="/#contact" class="nav-link">Контакты</a>
+            </nav>
+
+            <a href="/#contact" class="btn btn-outline btn-sm header-cta">Записаться</a>
+
+            <button class="burger" id="burgerBtn" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <nav>
+                <a href="/#services" class="nav-link">Услуги</a>
+                <a href="/#specialists" class="nav-link">Специалисты</a>
+                <a href="/#tariffs" class="nav-link">Тарифы</a>
+                <a href="/#reviews" class="nav-link">Отзывы</a>
+                <a href="/#contact" class="nav-link">Контакты</a>
+                <a href="/#contact" class="btn btn-primary mt-2">Записаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <span class="logo-icon">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M16 6 C16 6, 22 12, 22 18 C22 21.3 19.3 24 16 24 C12.7 24 10 21.3 10 18 C10 12 16 6 16 6Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                            <path d="M10 14 Q16 11 22 14" stroke="currentColor" stroke-width="1" fill="none"/>
+                        </svg>
+                    </span>
+                    <span class="logo-text">ЗдравДом</span>
+                </a>
+                <p class="footer-tagline">Дом, где заботятся о вашем здоровье — от костей до нервной системы.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Услуги</h4>
+                    <a href="/kirill">Хиропрактика</a>
+                    <a href="/denis">Саунд-хилинг</a>
+                    <a href="/#services">Телесная терапия</a>
+                    <a href="/#services">Групповые медитации</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Специалисты</h4>
+                    <a href="/kirill">Кирилл Борея</a>
+                    <a href="/denis">Денис</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="tel:+78001234567">+7 (800) 123-45-67</a>
+                    <a href="mailto:info@zdravdom.ru">info@zdravdom.ru</a>
+                    <span>г. Краснодар</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <span>© @DateTime.Now.Year ЗдравДом. Все права защищены.</span>
+                <span>Краснодар · Здравница Садовое</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

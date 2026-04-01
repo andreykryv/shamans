@@ -1,0 +1,229 @@
+@page
+@model DenisModel
+@{
+    ViewData["Title"] = "Денис — Саунд-хилинг";
+}
+
+<!-- HERO -->
+<section class="specialist-hero sound-hero">
+    <div class="specialist-hero-bg">
+        <div class="specialist-hero-overlay"></div>
+        <div class="sound-waves" id="soundWaves"></div>
+    </div>
+    <div class="container specialist-hero-content">
+        <div class="breadcrumb reveal-up">
+            <a href="/">ЗдравДом</a>
+            <span>/</span>
+            <span>Денис · Саунд-хилинг</span>
+        </div>
+        <div class="specialist-hero-grid">
+            <div class="specialist-hero-photo reveal-up delay-1">
+                <!-- ФОТО: поместите wwwroot/images/denis.jpg -->
+                <img src="~/images/denis.jpg" alt="Денис — саунд-хилер" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
+                <div class="photo-placeholder-lg sound-placeholder" style="display:none"><span>Д</span></div>
+                <div class="hero-photo-accent sound-accent"></div>
+            </div>
+            <div class="specialist-hero-text">
+                <span class="section-tag reveal-up">Саунд-хилер</span>
+                <h1 class="reveal-up delay-1">Саунд-хилинг: <em>глубокое восстановление</em> через вибрацию и звук</h1>
+                <p class="hero-sub reveal-up delay-2">Практики звуковой медитации, которые мягко возвращают тело в ресурсное состояние, успокаивают ум и наполняют внутренней энергией.</p>
+                <div class="hero-actions reveal-up delay-3">
+                    <a href="/#contact" class="btn btn-primary btn-lg">Записаться на сессию</a>
+                    <a href="#about-sound" class="btn btn-ghost btn-lg">Узнать о практике</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT IS SOUND HEALING -->
+<section class="content-section" id="about-sound">
+    <div class="container">
+        <div class="two-col-grid">
+            <div class="reveal-up">
+                <span class="section-tag">О практике</span>
+                <h2 class="section-title">Что такое <em>саунд-хилинг</em></h2>
+                <p class="body-text">Саунд-хилинг — это древняя практика восстановления целостности человека через звуковую вибрацию. Звуковые волны проходят сквозь тело, синхронизируя работу нервной системы и гармонизируя энергетическое состояние.</p>
+                <p class="body-text">Звук здесь не просто фон, а инструмент, который помогает телу отпустить зажимы, а сознанию — погрузиться в целительную тишину.</p>
+                <p class="body-text">Вибрации тибетских чаш проникают примерно на 15 сантиметров вглубь тела, способствуя отличному расслаблению и снятию психосоматических мышечных блоков.</p>
+            </div>
+            <div class="instruments-block reveal-up delay-2">
+                <h3>Инструменты</h3>
+                <div class="instrument-item">
+                    <div class="instrument-icon">◎</div>
+                    <div>
+                        <strong>Тибетские поющие чаши</strong>
+                        <span>Мягкая, обволакивающая вибрация для снятия блоков и гармонизации пространства</span>
+                    </div>
+                </div>
+                <div class="instrument-item">
+                    <div class="instrument-icon">◉</div>
+                    <div>
+                        <strong>Гонги</strong>
+                        <span>Мощный омывающий звук, стирающий ментальный шум</span>
+                    </div>
+                </div>
+                <div class="instrument-item">
+                    <div class="instrument-icon">○</div>
+                    <div>
+                        <strong>Плоские колокола</strong>
+                        <span>Вибрации проникают через кожу, вызывают резонанс в тканях мышц</span>
+                    </div>
+                </div>
+                <div class="instrument-item">
+                    <div class="instrument-icon">◌</div>
+                    <div>
+                        <strong>Резонансные инструменты</strong>
+                        <span>Колокольчики, шум дождя и океана — тонкие звуки для внутренней структуры</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="for-whom-section alt-bg">
+    <div class="container">
+        <div class="two-col-grid">
+            <div class="reveal-up">
+                <span class="section-tag">Для кого</span>
+                <h2 class="section-title">Саунд-хилинг <em>подойдёт вам</em>, если…</h2>
+                <div class="problems-list">
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Вы испытываете хронический стресс и внутреннее напряжение
+                    </div>
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Бессонница или прерывистый сон
+                    </div>
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Усталость, апатия и энергетическая перегрузка
+                    </div>
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Хотите научиться глубже чувствовать своё тело
+                    </div>
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Практикуете медитацию или находитесь на пути саморазвития
+                    </div>
+                    <div class="problem-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Ищете мягкий, но глубокий способ восстановить баланс
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-up delay-2">
+                <span class="section-tag">Результаты</span>
+                <h2 class="section-title">После практики <em>вы почувствуете</em></h2>
+                <div class="results-list">
+                    <div class="result-item">
+                        <div class="result-icon">✓</div>
+                        <span>Глубокое расслабление — тело словно «тает», отпуская напряжение</span>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">✓</div>
+                        <span>Ясность ума — поток мыслей замедляется, приходит внутренняя тишина</span>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">✓</div>
+                        <span>Прилив энергии — восстанавливается естественная жизненная сила</span>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">✓</div>
+                        <span>Качественный сон — практика помогает наладить режим отдыха</span>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">✓</div>
+                        <span>Эмоциональная разгрузка — уходят тревожность и зажимы</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SESSION FORMAT -->
+<section class="session-section">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <span class="section-tag">Как проходит</span>
+            <h2 class="section-title">Структура <em>сессии</em></h2>
+            <p class="section-sub">Длительность: 60–90 минут</p>
+        </div>
+        <div class="session-steps reveal-up delay-1">
+            <div class="session-step">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <h4>Введение и настройка</h4>
+                    <p>Знакомство, обсуждение текущего состояния, комфортное размещение в пространстве</p>
+                </div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="session-step">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <h4>Расслабление и дыхание</h4>
+                    <p>Мягкие техники для снятия первичного напряжения и настройки на процесс</p>
+                </div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="session-step">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <h4>Погружение в звук</h4>
+                    <p>Основная часть, где звук ведёт вас в глубокое состояние покоя и восстановления</p>
+                </div>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="session-step">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <h4>Интеграция и завершение</h4>
+                    <p>Мягкий выход из практики, время «приземлиться» и вернуться в обычное состояние</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FORMATS -->
+<section class="formats-section alt-bg">
+    <div class="container">
+        <div class="section-header reveal-up">
+            <span class="section-tag">Форматы</span>
+            <h2 class="section-title">Выберите <em>свой формат</em></h2>
+        </div>
+        <div class="formats-grid">
+            <div class="format-card reveal-up delay-1">
+                <div class="format-icon">◎</div>
+                <h4>Индивидуальные сессии</h4>
+                <p>Глубокое личное погружение. Практика адаптируется под ваш запрос и текущее состояние.</p>
+            </div>
+            <div class="format-card reveal-up delay-2">
+                <div class="format-icon">◉◉</div>
+                <h4>Групповые практики</h4>
+                <p>Возможность разделить опыт с единомышленниками в общей энергетике и пространстве.</p>
+            </div>
+            <div class="format-card reveal-up delay-3">
+                <div class="format-icon">⟐</div>
+                <h4>Ретриты</h4>
+                <p>Полное погружение в звуковую среду на несколько дней на природе, в комфортной обстановке.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-card sound-cta reveal-up">
+            <h2>Готовы погрузиться в мир <em>звука и вибрации?</em></h2>
+            <p>Оставьте свои контакты — Денис свяжется с вами, чтобы согласовать удобное время и формат</p>
+            <a href="/#contact" class="btn btn-primary btn-lg">Записаться к Денису</a>
+        </div>
+    </div>
+</section>
