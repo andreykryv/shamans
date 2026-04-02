@@ -9,10 +9,6 @@
 ══════════════════════════════════════════ -->
 <section class="hero" id="hero">
     <div class="hero-bg">
-        <!-- 
-            ФОТО ДЛЯ HERO-ФОНА: скачайте с https://trufanov-photographer.ru/disk/zdravdom-j5vnhq
-            поместите файл в wwwroot/images/hero-bg.jpg
-        -->
         <div class="hero-overlay"></div>
         <div class="hero-particles" id="heroParticles"></div>
     </div>
@@ -23,15 +19,15 @@
             Центр восстановления здоровья · Краснодар
         </div>
         <h1 class="hero-title reveal-up delay-1">
-            Дом,<br>
-            <em>где лечат</em><br>
-            по-настоящему
+            Убираем боль в спине за, <em>1–3 сеанса</em>
+            + восстанавливаем нервную систему без таблеток с<br>
+            <em> выгодой до 15%</em><br> за курс — авторский подход двух профильных специалистов
         </h1>
         <p class="hero-sub reveal-up delay-2">
             От костей до нервной системы — комплексный подход к вашему здоровью. Приходят с болью. Уходят здоровыми.
         </p>
         <div class="hero-actions reveal-up delay-3">
-            <a href="#contact" class="btn btn-primary btn-lg">Записаться на приём</a>
+            <button class="btn btn-cta btn-lg" onclick="openModal()">Записаться на приём</button>
             <a href="#services" class="btn btn-ghost btn-lg">Узнать больше
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -117,10 +113,6 @@
             </div>
             <div class="about-visual reveal-right">
                 <div class="about-img-wrap">
-                    <!-- 
-                        ФОТО: скачайте с https://trufanov-photographer.ru/disk/zdravdom-j5vnhq
-                        поместите в wwwroot/images/about.jpg 
-                    -->
                     <div class="about-img-placeholder">
                         <div class="placeholder-pattern"></div>
                         <span>Место практики · ЗдравДом</span>
@@ -131,7 +123,7 @@
                     <blockquote>
                         «Истинная причина боли в спине, суставах и шее — в мышцах. Мы освобождаем их от спазмов.»
                     </blockquote>
-                    <cite>Кирилл Борея, хиропрактик</cite>
+                    <cite>Кирилл, хиропрактик</cite>
                 </div>
             </div>
         </div>
@@ -151,7 +143,6 @@
 
         <div class="services-grid">
 
-            <!-- Service 1: Chiropractic -->
             <div class="service-card reveal-up delay-1" data-href="/kirill">
                 <div class="service-card-inner">
                     <div class="service-num">01</div>
@@ -179,7 +170,6 @@
                 </div>
             </div>
 
-            <!-- Service 2: Sound healing -->
             <div class="service-card reveal-up delay-2" data-href="/denis">
                 <div class="service-card-inner">
                     <div class="service-num">02</div>
@@ -208,7 +198,6 @@
                 </div>
             </div>
 
-            <!-- Service 3: Body therapy -->
             <div class="service-card reveal-up delay-3">
                 <div class="service-card-inner">
                     <div class="service-num">03</div>
@@ -225,16 +214,15 @@
                         <span>Упражнения</span>
                         <span>Движение</span>
                     </div>
-                    <a href="#contact" class="service-link">
+                    <button class="service-link" onclick="openModal()">
                         Записаться
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                             <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </a>
+                    </button>
                 </div>
             </div>
 
-            <!-- Service 4: Group meditation -->
             <div class="service-card reveal-up delay-4">
                 <div class="service-card-inner">
                     <div class="service-num">04</div>
@@ -253,12 +241,12 @@
                         <span>Чайная церемония</span>
                         <span>Сообщество</span>
                     </div>
-                    <a href="#contact" class="service-link">
+                    <button class="service-link" onclick="openModal()">
                         Записаться
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                             <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </a>
+                    </button>
                 </div>
             </div>
 
@@ -267,29 +255,26 @@
 </section>
 
 <!-- ══════════════════════════════════════════
-     SPECIALISTS
+     SPECIALISTS — без слоганов
 ══════════════════════════════════════════ -->
 <section class="specialists-section" id="specialists">
     <div class="container">
         <div class="section-header reveal-up">
             <span class="section-tag">Наши специалисты</span>
-            <h2 class="section-title">Люди, которым <em>можно доверять</em></h2>
         </div>
 
         <div class="specialists-grid">
 
-            <!-- Kirill -->
             <div class="specialist-card reveal-up delay-1">
                 <div class="specialist-photo-wrap">
-                    <!-- ФОТО: wwwroot/images/kirill.jpg — скачать с https://trufanov-photographer.ru/disk/zdravdom-j5vnhq -->
-                    <img src="~/images/kirill.jpg" alt="Кирилл Борея — хиропрактик" class="specialist-photo" onerror="this.parentElement.classList.add('photo-fallback')"/>
+                    <img src="~/images/kirill.jpg" alt="Кирилл — хиропрактик" class="specialist-photo" onerror="this.parentElement.classList.add('photo-fallback')"/>
                     <div class="specialist-photo-placeholder">
                         <span>К</span>
                     </div>
                     <div class="specialist-badge">Хиропрактик</div>
                 </div>
                 <div class="specialist-info">
-                    <h3>Кирилл Борея</h3>
+                    <h3>Кирилл</h3>
                     <p class="specialist-role">Хиропрактик · Специалист по опорно-двигательному аппарату</p>
                     <p>Многолетний опыт работы с самыми сложными случаями. Автор метода, объединяющего миопрессуру, акупрессуру и висцеральную терапию.</p>
                     <div class="specialist-skills">
@@ -302,10 +287,8 @@
                 </div>
             </div>
 
-            <!-- Denis -->
             <div class="specialist-card reveal-up delay-2">
                 <div class="specialist-photo-wrap">
-                    <!-- ФОТО: wwwroot/images/denis.jpg — скачать с https://trufanov-photographer.ru/disk/zdravdom-j5vnhq -->
                     <img src="~/images/denis.jpg" alt="Денис — саунд-хилер" class="specialist-photo" onerror="this.parentElement.classList.add('photo-fallback')"/>
                     <div class="specialist-photo-placeholder">
                         <span>Д</span>
@@ -326,19 +309,9 @@
                 </div>
             </div>
 
-            <!-- ══ PLACEHOLDER: добавьте нового специалиста ══
-                 Скопируйте блок .specialist-card выше и заполните данными.
-                 Фото поместите в wwwroot/images/имя-специалиста.jpg
-            -->
-
         </div>
 
-        <div class="specialists-cta reveal-up">
-            <p>Хотите присоединиться к нашей команде?</p>
-            <a href="mailto:info@zdravdom.ru" class="btn btn-outline">Написать нам</a>
-        </div>
-    </div>
-</section>
+        
 
 <!-- ══════════════════════════════════════════
      TARIFFS
@@ -347,18 +320,16 @@
     <div class="container">
         <div class="section-header reveal-up">
             <span class="section-tag">Тарифы</span>
-            <h2 class="section-title">Прозрачные <em>цены</em></h2>
+            <h2 class="section-title">Скидка до <em>15%</em></h2>
             <p class="section-sub">Выберите формат, который подходит именно вам</p>
         </div>
 
         <div class="tariffs-grid">
 
-            <!-- TARIFF PLACEHOLDER 1 -->
             <div class="tariff-card reveal-up delay-1">
                 <div class="tariff-header">
                     <span class="tariff-tag">Хиропрактика</span>
                     <div class="tariff-price">
-                        <!-- ЗАМЕНИТЕ: укажите цену -->
                         <span class="price-num">—</span>
                         <span class="price-unit">₽ / сеанс</span>
                     </div>
@@ -370,11 +341,10 @@
                     <li>Мануальные практики</li>
                     <li>Рекомендации по упражнениям</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary w-full">Записаться</a>
-                <span class="tariff-note"><!-- ЗАМЕНИТЕ: добавьте примечание --></span>
+                <button class="btn btn-cta w-full" onclick="openModal()">Записаться</button>
+                <span class="tariff-note"></span>
             </div>
 
-            <!-- TARIFF PLACEHOLDER 2 -->
             <div class="tariff-card tariff-featured reveal-up delay-2">
                 <div class="tariff-popular">Популярное</div>
                 <div class="tariff-header">
@@ -392,11 +362,10 @@
                     <li>Поддержка между сеансами</li>
                     <li>Скидка относительно разовых</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary w-full">Записаться</a>
-                <span class="tariff-note"><!-- ЗАМЕНИТЕ: добавьте примечание --></span>
+                <button class="btn btn-cta w-full" onclick="openModal()">Записаться</button>
+                <span class="tariff-note"></span>
             </div>
 
-            <!-- TARIFF PLACEHOLDER 3 -->
             <div class="tariff-card reveal-up delay-3">
                 <div class="tariff-header">
                     <span class="tariff-tag">Саунд-хилинг</span>
@@ -406,22 +375,15 @@
                     </div>
                 </div>
                 <ul class="tariff-features">
-                    <li>Индивидуальная сессия (60–90 мин)</li>
+                    <li>Индивидуальные и групповые сессии(60–90 мин)</li>
                     <li>Тибетские чаши, гонги, колокола</li>
                     <li>Дыхательные практики</li>
                     <li>Настройка под ваш запрос</li>
                     <li>Рекомендации после сессии</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary w-full">Записаться</a>
-                <span class="tariff-note"><!-- ЗАМЕНИТЕ: добавьте примечание --></span>
+                <button class="btn btn-cta w-full" onclick="openModal()">Записаться</button>
+                <span class="tariff-note"></span>
             </div>
-
-            <!--
-                ══ PLACEHOLDER: ДОБАВЬТЕ НОВЫЙ ТАРИФ ══
-                Скопируйте блок .tariff-card и заполните данными.
-                Для выделенного тарифа добавьте класс tariff-featured
-                и блок <div class="tariff-popular">Популярное</div>
-            -->
 
         </div>
     </div>
@@ -559,36 +521,36 @@
                 <h2 class="section-title">Сделайте первый шаг <em>к здоровью</em></h2>
                 <p>Оставьте заявку — мы свяжемся с вами, подберём удобное время и ответим на все вопросы.</p>
 
-               <div class="contact-info">
-    <div class="contact-item">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M3.5 3.5h11v11h-11z" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M6 7h6M6 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <span>г. Краснодар · Здравница Садовое</span>
-    </div>
-    <div class="contact-item">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M3 3.5C3 3.5 4.5 2 6 3.5C7 4.5 7.5 6 7 7C6 9 9 12 11 11C12 10.5 13.5 11 14.5 12C16 13.5 14.5 15 14.5 15C14.5 15 9 16 3.5 10.5C-2 5 3 3.5 3 3.5Z" stroke="currentColor" stroke-width="1.2"/>
-        </svg>
-        <a href="tel:+79965357073">+7 (996) 535-70-73</a>
-        <span>— Кирилл</span>
-    </div>
-    <div class="contact-item">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M3 3.5C3 3.5 4.5 2 6 3.5C7 4.5 7.5 6 7 7C6 9 9 12 11 11C12 10.5 13.5 11 14.5 12C16 13.5 14.5 15 14.5 15C14.5 15 9 16 3.5 10.5C-2 5 3 3.5 3 3.5Z" stroke="currentColor" stroke-width="1.2"/>
-        </svg>
-        <a href="tel:+79952236999">+7 (995) 223-69-99</a>
-        <span>— Денис</span>
-    </div>
-    <div class="contact-item">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M2 6l7 5 7-5" stroke="currentColor" stroke-width="1.2"/>
-        </svg>
-        <a href="mailto:Kirill.borea@gmail.com">Kirill.borea@gmail.com</a>
-    </div>
-</div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M3.5 3.5h11v11h-11z" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M6 7h6M6 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                        </svg>
+                        <span>г. Краснодар · Здравница Садовое</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M3 3.5C3 3.5 4.5 2 6 3.5C7 4.5 7.5 6 7 7C6 9 9 12 11 11C12 10.5 13.5 11 14.5 12C16 13.5 14.5 15 14.5 15C14.5 15 9 16 3.5 10.5C-2 5 3 3.5 3 3.5Z" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                        <a href="tel:+79965357073">+7 (996) 535-70-73</a>
+                        <span>— Кирилл</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M3 3.5C3 3.5 4.5 2 6 3.5C7 4.5 7.5 6 7 7C6 9 9 12 11 11C12 10.5 13.5 11 14.5 12C16 13.5 14.5 15 14.5 15C14.5 15 9 16 3.5 10.5C-2 5 3 3.5 3 3.5Z" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                        <a href="tel:+79952236999">+7 (995) 223-69-99</a>
+                        <span>— Денис</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M2 6l7 5 7-5" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                        <a href="mailto:Kirill.borea@gmail.com">Kirill.borea@gmail.com</a>
+                    </div>
+                </div>
 
                 <div class="faq-mini">
                     <h4>Частые вопросы</h4>
@@ -626,7 +588,7 @@
                         <label for="service">Интересующая услуга</label>
                         <select id="service" name="Service">
                             <option value="">— Выберите —</option>
-                            <option value="chiro">Хиропрактика (Кирилл Борея)</option>
+                            <option value="chiro">Хиропрактика (Кирилл)</option>
                             <option value="sound">Саунд-хилинг (Денис)</option>
                             <option value="body">Телесная терапия</option>
                             <option value="group">Групповые медитации</option>
@@ -638,7 +600,7 @@
                         <textarea id="message" name="Message" rows="3" placeholder="Боль в пояснице уже 3 года..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full btn-lg" id="submitBtn">
+                    <button type="submit" class="btn btn-cta w-full btn-lg" id="submitBtn">
                         <span class="btn-text">Отправить заявку</span>
                         <span class="btn-loader" style="display:none">Отправляем…</span>
                     </button>

@@ -20,6 +20,11 @@
     --c-white:     #ffffff;
     --c-error:     #c0392b;
 
+    /* CTA button special color */
+    --c-cta:       #c8853a;
+    --c-cta-dark:  #a06828;
+    --c-cta-glow:  rgba(200, 133, 58, 0.45);
+
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body:    'Raleway', system-ui, sans-serif;
 
@@ -78,7 +83,14 @@ h4 { font-size: 1.1rem; font-weight: 500; }
 em { font-style: italic; color: var(--c-copper); }
 strong { font-weight: 600; }
 
-.body-text { font-size: 1.05rem; color: var(--c-text-md); margin-bottom: 1.2rem; }
+.body-text {
+    font-size: 1.05rem;
+    color: var(--c-text-md);
+    margin-bottom: 1.2rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
 .section-tag {
     display: inline-block;
     font-family: var(--font-body);
@@ -152,6 +164,77 @@ strong { font-weight: 600; }
 .w-full { width: 100%; justify-content: center; }
 .mt-2 { margin-top: 1.5rem; }
 
+/* ═══ CTA BUTTON — главная кнопка "Записаться" ═══ */
+.btn-cta {
+    position: relative;
+    background: linear-gradient(135deg, #d4924a 0%, #b07840 50%, #9a6430 100%);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 15px 30px;
+    overflow: hidden;
+    box-shadow:
+        0 4px 16px var(--c-cta-glow),
+        0 1px 0 rgba(255,255,255,0.15) inset;
+    transition: transform 0.25s var(--ease-out-quint),
+                box-shadow 0.25s var(--ease-out-quint),
+                filter 0.25s;
+}
+
+.btn-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.btn-cta::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s, opacity 0.5s;
+    opacity: 0;
+}
+
+.btn-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 8px 28px var(--c-cta-glow),
+        0 2px 0 rgba(255,255,255,0.2) inset;
+    filter: brightness(1.08);
+}
+
+.btn-cta:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    transition: width 0.3s, height 0.3s, opacity 0.5s;
+}
+
+/* Пульсирующий ореол — только для кнопки в hero */
+.hero-actions .btn-cta {
+    animation: ctaPulse 3s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 4px 16px var(--c-cta-glow), 0 0 0 0 rgba(200,133,58,0); }
+    50% { box-shadow: 0 6px 24px var(--c-cta-glow), 0 0 0 8px rgba(200,133,58,0); }
+}
+
+/* Header CTA button */
+.header-cta {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    font-size: 0.85rem;
+}
+
 /* ─── ANIMATIONS ─── */
 .reveal-up {
     opacity: 0;
@@ -221,15 +304,36 @@ strong { font-weight: 600; }
     transition: color 0.2s, background 0.2s;
 }
 .nav-link:hover { color: var(--c-cream); background: rgba(245,239,230,0.08); }
-.header-cta { flex-shrink: 0; }
+
+/* Mobile header actions group */
+.header-mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+/* Telegram / social icon in header */
+.header-social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    color: rgba(245,239,230,0.7);
+    transition: color 0.2s, background 0.2s;
+}
+.header-social-btn:hover {
+    color: var(--c-cream);
+    background: rgba(245,239,230,0.08);
+}
 
 /* Burger */
 .burger {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 8px;
-    margin-left: auto;
 }
 .burger span {
     display: block;
@@ -262,6 +366,11 @@ strong { font-weight: 600; }
     font-size: 1rem;
     border-bottom: 1px solid rgba(245,239,230,0.06);
 }
+.mobile-menu .btn-cta {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+}
 .mobile-menu.open { display: flex; }
 
 /* ═══════════════════════════════════════════
@@ -278,7 +387,6 @@ strong { font-weight: 600; }
 .hero-bg {
     position: absolute;
     inset: 0;
-    /* ФОТО ФОН: поместите hero-bg.jpg в wwwroot/images/ */
     background-image: url('/images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
@@ -537,6 +645,8 @@ strong { font-weight: 600; }
     font-size: 0.92rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    hyphens: auto;
 }
 .service-tags {
     display: flex;
@@ -643,6 +753,8 @@ strong { font-weight: 600; }
     color: var(--c-text-md);
     line-height: 1.7;
     margin-bottom: 1rem;
+    text-align: justify;
+    hyphens: auto;
 }
 .specialist-skills {
     display: flex;
@@ -770,13 +882,9 @@ strong { font-weight: 600; }
     text-align: center;
     margin-top: 1rem;
 }
-.tariff-card .btn-primary {
-    background: var(--c-copper);
-    border-color: var(--c-copper);
-}
-.tariff-card .btn-primary:hover {
-    background: var(--c-copper-lt);
-    border-color: var(--c-copper-lt);
+.tariff-card .btn-cta {
+    width: 100%;
+    justify-content: center;
 }
 
 /* ═══════════════════════════════════════════
@@ -825,6 +933,8 @@ strong { font-weight: 600; }
     color: var(--c-text);
     line-height: 1.75;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    hyphens: auto;
 }
 .review-author { border-top: 1px solid var(--c-cream-dk); padding-top: 1rem; }
 .review-name { font-weight: 600; font-size: 0.9rem; display: block; }
@@ -1165,7 +1275,6 @@ strong { font-weight: 600; }
 .specialist-hero-text .section-title { color: var(--c-cream); }
 .specialist-hero-text .hero-sub { color: rgba(245,239,230,0.75); }
 
-/* Content sections */
 .content-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--c-cream); }
 .two-col-grid {
     display: grid;
@@ -1233,7 +1342,6 @@ strong { font-weight: 600; }
     min-width: 24px;
 }
 
-/* Problems & Results */
 .problems-section { padding: clamp(4rem, 8vw, 7rem) 0; }
 .for-whom-section { padding: clamp(4rem, 8vw, 7rem) 0; }
 .problems-list, .results-list { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1rem; }
@@ -1272,7 +1380,6 @@ strong { font-weight: 600; }
     line-height: 1.7;
 }
 
-/* Contraindications */
 .contra-section { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--c-cream); }
 .contra-grid {
     display: flex;
@@ -1288,7 +1395,6 @@ strong { font-weight: 600; }
     background: var(--c-white);
 }
 
-/* Session steps */
 .session-section { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--c-cream-dk); }
 .session-steps {
     display: grid;
@@ -1314,7 +1420,6 @@ strong { font-weight: 600; }
 .step-content p { font-size: 0.82rem; color: var(--c-text-lt); line-height: 1.6; }
 .step-arrow { color: var(--c-beige); font-size: 1.5rem; text-align: center; }
 
-/* CTA section */
 .cta-section { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--c-cream-dk); }
 .cta-card {
     text-align: center;
@@ -1325,6 +1430,150 @@ strong { font-weight: 600; }
 .cta-card h2 { color: var(--c-cream); margin-bottom: 1rem; font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 .cta-card p { color: rgba(245,239,230,0.65); margin-bottom: 2rem; font-size: 1rem; }
 .sound-cta { background: linear-gradient(135deg, #0d1f10, #1a3d2a); }
+.cta-card .btn-cta { margin: 0 auto; }
+
+/* ═══════════════════════════════════════════
+   BOOKING MODAL
+═══════════════════════════════════════════ */
+.booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s var(--ease-out-quint), visibility 0.35s;
+}
+
+.booking-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 20, 12, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.modal-card {
+    position: relative;
+    z-index: 1;
+    background: var(--c-white);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 5vw, 3rem);
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.4s var(--ease-out-quint);
+    overflow: hidden;
+}
+
+.booking-modal.open .modal-card {
+    transform: translateY(0) scale(1);
+}
+
+/* Decorative top stripe */
+.modal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--c-forest), var(--c-copper), var(--c-forest));
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-text-lt);
+    background: var(--c-cream);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    z-index: 2;
+}
+.modal-close:hover {
+    background: var(--c-cream-dk);
+    color: var(--c-text);
+    transform: rotate(90deg);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modal-logo-icon {
+    width: 56px; height: 56px;
+    background: var(--c-forest);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-copper-lt);
+    margin: 0 auto 1.2rem;
+}
+
+.modal-header h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--c-text);
+}
+
+.modal-sub {
+    font-size: 0.88rem;
+    color: var(--c-text-lt);
+    line-height: 1.6;
+}
+
+.btn-modal-submit {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    padding: 16px 24px;
+}
+
+/* Modal success state */
+.modal-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 1rem;
+}
+
+.modal-success.show { display: flex; }
+
+.success-checkmark {
+    color: var(--c-forest);
+    animation: successPop 0.5s var(--ease-out-quint);
+}
+
+@keyframes successPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-success h4 {
+    font-size: 1.4rem;
+    color: var(--c-text);
+}
+
+.modal-success p {
+    font-size: 0.92rem;
+    color: var(--c-text-md);
+    line-height: 1.6;
+}
 
 /* ═══════════════════════════════════════════
    RESPONSIVE
@@ -1334,14 +1583,13 @@ strong { font-weight: 600; }
     .tariff-featured { transform: none; }
     .tariff-featured:hover { transform: translateY(-4px); }
 
-    .session-steps {
-        grid-template-columns: 1fr;
-    }
+    .session-steps { grid-template-columns: 1fr; }
     .step-arrow { transform: rotate(90deg); }
 }
 
 @media (max-width: 768px) {
     .main-nav, .header-cta { display: none; }
+    .header-mobile-actions { display: flex; }
     .burger { display: flex; }
 
     .about-grid { grid-template-columns: 1fr; }
@@ -1363,7 +1611,6 @@ strong { font-weight: 600; }
     .specialist-hero-photo { width: 100%; max-width: 260px; height: 300px; margin: 0 auto; }
 
     .two-col-grid { grid-template-columns: 1fr; }
-
     .formats-grid { grid-template-columns: 1fr; }
 
     .hero-stats { gap: 1.2rem; }
@@ -1377,4 +1624,5 @@ strong { font-weight: 600; }
     .review-card { min-width: 85vw; }
     .tariffs-grid { max-width: 100%; }
     .specialists-cta { flex-direction: column; text-align: center; }
+    .modal-card { border-radius: var(--radius-lg); }
 }

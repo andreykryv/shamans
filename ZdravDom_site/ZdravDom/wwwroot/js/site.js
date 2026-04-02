@@ -8,9 +8,107 @@
    - Hero particle canvas
    - Sound waves animation
    - Form handling
+   - Booking modal
 ═══════════════════════════════════════════════════════════ */
 
+/* ─── BOOKING MODAL (global functions) ─── */
+function openModal() {
+    const modal = document.getElementById('bookingModal');
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // Focus first input
+    setTimeout(() => {
+        const input = document.getElementById('modalName');
+        if (input) input.focus();
+    }, 150);
+}
+
+function closeModal() {
+    const modal = document.getElementById('bookingModal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Reset success state after close animation
+    setTimeout(() => {
+        const success = document.getElementById('modalSuccess');
+        const body = document.getElementById('modalBody');
+        if (success && body) {
+            success.classList.remove('show');
+            success.style.display = 'none';
+            body.style.display = '';
+        }
+        const name = document.getElementById('modalName');
+        const phone = document.getElementById('modalPhone');
+        if (name) name.value = '';
+        if (phone) phone.value = '';
+    }, 400);
+}
+
+function closeMobileMenu() {
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (burgerBtn) burgerBtn.classList.remove('open');
+    if (mobileMenu) mobileMenu.classList.remove('open');
+}
+
+function submitModal() {
+    const nameEl = document.getElementById('modalName');
+    const phoneEl = document.getElementById('modalPhone');
+    const submitBtn = document.getElementById('modalSubmit');
+
+    if (!nameEl || !phoneEl) return;
+
+    const name = nameEl.value.trim();
+    const phone = phoneEl.value.trim();
+
+    // Simple validation
+    if (!name) {
+        nameEl.focus();
+        nameEl.style.borderColor = '#c0392b';
+        setTimeout(() => { nameEl.style.borderColor = ''; }, 2000);
+        return;
+    }
+    if (!phone || phone.length < 12) {
+        phoneEl.focus();
+        phoneEl.style.borderColor = '#c0392b';
+        setTimeout(() => { phoneEl.style.borderColor = ''; }, 2000);
+        return;
+    }
+
+    // Animate button
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.btn-text').textContent = 'Отправляем…';
+    }
+
+    // Simulate submit (replace with real API call)
+    setTimeout(() => {
+        const body = document.getElementById('modalBody');
+        const success = document.getElementById('modalSuccess');
+        if (body) body.style.display = 'none';
+        if (success) {
+            success.style.display = 'flex';
+            success.classList.add('show');
+        }
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            const textEl = submitBtn.querySelector('.btn-text');
+            if (textEl) textEl.textContent = 'Отправить заявку';
+        }
+        // Auto-close after 3s
+        setTimeout(() => closeModal(), 3000);
+    }, 800);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    /* ─── MODAL KEYBOARD CLOSE ─── */
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
 
     /* ─── HEADER SCROLL ─── */
     const header = document.getElementById('siteHeader');
@@ -29,8 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             burgerBtn.classList.toggle('open');
             mobileMenu.classList.toggle('open');
         });
-        // Close on nav link click
-        mobileMenu.querySelectorAll('.nav-link, .btn').forEach(link => {
+        mobileMenu.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 burgerBtn.classList.remove('open');
                 mobileMenu.classList.remove('open');
@@ -87,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const total = cards.length;
         let current = 0;
 
-        // Build dots
         if (dotsWrap) {
             cards.forEach((_, i) => {
                 const dot = document.createElement('button');
@@ -114,7 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
         prevBtn?.addEventListener('click', () => goTo(current - 1));
         nextBtn?.addEventListener('click', () => goTo(current + 1));
 
-        // Drag to scroll
         let isDragging = false, startX = 0, scrollLeft = 0;
         track.addEventListener('mousedown', e => {
             isDragging = true;
@@ -131,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
             track.scrollLeft = scrollLeft - (x - startX) * 1.5;
         });
 
-        // Touch
         let touchStart = 0;
         track.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; }, { passive: true });
         track.addEventListener('touchend', e => {
@@ -139,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
         }, { passive: true });
 
-        // Track scroll to update dots
         track.addEventListener('scroll', () => {
             const idx = Math.round(track.scrollLeft / (cards[0].offsetWidth + 24));
             if (idx !== current) { current = Math.min(idx, total - 1); updateDots(); }
@@ -192,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             const p = new Particle();
-            p.life = Math.random() * p.maxLife; // stagger
+            p.life = Math.random() * p.maxLife;
             particles.push(p);
         }
 
@@ -226,18 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
             circle.setAttribute('fill', 'none');
             circle.setAttribute('stroke', `rgba(100,180,140,0.6)`);
             circle.setAttribute('stroke-width', '1');
-            circle.style.animation = `soundRing 4s ease-out ${i * 0.7}s infinite`;
             svg.appendChild(circle);
         }
 
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes soundRing {
-                0% { r: ${80}; opacity: 0.6; }
-                100% { r: 800; opacity: 0; }
-            }
-        `;
-        // Use JS animation instead of CSS for simplicity
         const rings = svg.querySelectorAll('circle');
         let t = 0;
         const animateRings = () => {
@@ -263,21 +347,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ─── CONTACT FORM ─── */
+    /* ─── CONTACT FORM (main page inline form) ─── */
     const form = document.getElementById('contactForm');
     if (form) {
         const submitBtn = document.getElementById('submitBtn');
         const successEl = document.getElementById('formSuccess');
 
         form.addEventListener('submit', async (e) => {
-            // Native submit for server-side; JS enhancement for AJAX
             if (!submitBtn) return;
             submitBtn.querySelector('.btn-text').style.display = 'none';
             submitBtn.querySelector('.btn-loader').style.display = 'inline';
             submitBtn.disabled = true;
         });
 
-        // If server returned success (page reload with success message)
         if (successEl && successEl.dataset.show === 'true') {
             successEl.style.display = 'flex';
         }
@@ -296,10 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ─── PHONE MASK ─── */
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', (e) => {
+    /* ─── PHONE MASK (modal + main form) ─── */
+    function applyPhoneMask(input) {
+        input.addEventListener('input', (e) => {
             let val = e.target.value.replace(/\D/g, '');
             if (val.startsWith('8')) val = '7' + val.slice(1);
             if (!val.startsWith('7')) val = '7' + val;
@@ -312,5 +393,19 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.value = masked;
         });
     }
+
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) applyPhoneMask(phoneInput);
+
+    const modalPhone = document.getElementById('modalPhone');
+    if (modalPhone) applyPhoneMask(modalPhone);
+
+    /* ─── OPEN MODAL from buttons with data-modal attr ─── */
+    document.querySelectorAll('[data-open-modal]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    });
 
 });
