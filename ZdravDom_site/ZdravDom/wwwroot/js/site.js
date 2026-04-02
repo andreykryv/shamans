@@ -10,6 +10,7 @@
    - Form handling
    - Booking modal
    - Global booking buttons override
+   - Contact highlight on click
 ═══════════════════════════════════════════════════════════ */
 
 /* ─── BOOKING MODAL (global functions) ─── */
@@ -19,7 +20,6 @@ function openModal() {
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    // Focus first input
     setTimeout(() => {
         const input = document.getElementById('modalName');
         if (input) input.focus();
@@ -32,7 +32,6 @@ function closeModal() {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    // Reset success state after close animation
     setTimeout(() => {
         const success = document.getElementById('modalSuccess');
         const body = document.getElementById('modalBody');
@@ -65,7 +64,6 @@ function submitModal() {
     const name = nameEl.value.trim();
     const phone = phoneEl.value.trim();
 
-    // Simple validation
     if (!name) {
         nameEl.focus();
         nameEl.style.borderColor = '#c0392b';
@@ -79,13 +77,11 @@ function submitModal() {
         return;
     }
 
-    // Animate button
     if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.querySelector('.btn-text').textContent = 'Отправляем…';
     }
 
-    // Simulate submit (replace with real API call)
     setTimeout(() => {
         const body = document.getElementById('modalBody');
         const success = document.getElementById('modalSuccess');
@@ -99,7 +95,6 @@ function submitModal() {
             const textEl = submitBtn.querySelector('.btn-text');
             if (textEl) textEl.textContent = 'Отправить заявку';
         }
-        // Auto-close after 3s
         setTimeout(() => closeModal(), 3000);
     }, 800);
 }
@@ -357,17 +352,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ─── ГЛОБАЛЬНАЯ ОБРАБОТКА КНОПОК ЗАПИСИ ─── */
-    // Все элементы, которые содержат текст "Записаться" или имеют классы, связанные с записью, открывают модалку
     const bookingSelectors = [
         'a[href="#contact"]', 
         'a[href="/#contact"]',
         '.btn-cta:not([data-no-modal])',
         '.btn-primary:not([data-no-modal])',
-        '[onclick*="openModal"]' // уже работают, но дублирование не страшно
+        '[onclick*="openModal"]'
     ];
     
     function handleBookingClick(e) {
-        // Предотвращаем переход по ссылке
         if (e.currentTarget.tagName === 'A') {
             e.preventDefault();
         }
@@ -375,19 +368,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     document.querySelectorAll(bookingSelectors.join(',')).forEach(el => {
-        // Проверяем, не привязан ли уже обработчик, чтобы не дублировать
         if (!el.hasAttribute('data-modal-bound')) {
             el.addEventListener('click', handleBookingClick);
             el.setAttribute('data-modal-bound', 'true');
         }
     });
     
-    // Также находим все кнопки и ссылки с текстом "Записаться" (регистронезависимо)
     const allElements = document.querySelectorAll('a, button');
     allElements.forEach(el => {
         const text = el.innerText.trim().toLowerCase();
         if (text.includes('записаться') && !el.hasAttribute('data-modal-bound') && !el.closest('.service-card[data-href]')) {
-            // Исключаем карточки услуг, которые ведут на страницы специалистов (там кнопка "Подробнее", не мешает)
             if (el.closest('.service-card') && el.closest('.service-card').getAttribute('data-href')) return;
             el.addEventListener('click', (e) => {
                 if (el.tagName === 'A') e.preventDefault();
@@ -397,8 +387,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* ─── SMOOTH SCROLL for anchor links (кроме тех, что перехвачены выше) ─── */
-    document.querySelectorAll('a[href^="#"]:not([data-modal-bound])').forEach(anchor => {
+    /* ─── ОБРАБОТКА КНОПКИ "КОНТАКТЫ" — плавный скролл к футеру и подсветка ─── */
+    function scrollToContacts() {
+        const contactsSection = document.getElementById('contacts');
+        if (contactsSection) {
+            const offset = contactsSection.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+            // Подсветка
+            contactsSection.style.transition = 'background 0.5s';
+            contactsSection.style.backgroundColor = 'rgba(176,120,64,0.2)';
+            setTimeout(() => {
+                contactsSection.style.backgroundColor = '';
+            }, 1000);
+        } else {
+            // fallback: ищем footer
+            const footer = document.querySelector('.site-footer');
+            if (footer) {
+                const offset = footer.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+                footer.style.transition = 'background 0.5s';
+                footer.style.backgroundColor = 'rgba(176,120,64,0.2)';
+                setTimeout(() => {
+                    footer.style.backgroundColor = '';
+                }, 1000);
+            }
+        }
+    }
+
+    // Находим все ссылки с якорем #contact или текстом "Контакты"
+    const contactLinks = document.querySelectorAll('a[href="#contact"], a[href="/#contact"], a.nav-link[href*="contact"]');
+    contactLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToContacts();
+        });
+    });
+
+    /* ─── SMOOTH SCROLL for other anchor links (без data-modal-bound) ─── */
+    document.querySelectorAll('a[href^="#"]:not([data-modal-bound]):not([href="#contact"])').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const id = this.getAttribute('href').slice(1);
             const target = document.getElementById(id);
@@ -410,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ─── PHONE MASK (modal + main form) ─── */
+    /* ─── PHONE MASK ─── */
     function applyPhoneMask(input) {
         input.addEventListener('input', (e) => {
             let val = e.target.value.replace(/\D/g, '');
@@ -432,7 +458,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalPhone = document.getElementById('modalPhone');
     if (modalPhone) applyPhoneMask(modalPhone);
 
-    /* ─── OPEN MODAL from buttons with data-modal attr ─── */
     document.querySelectorAll('[data-open-modal]').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
