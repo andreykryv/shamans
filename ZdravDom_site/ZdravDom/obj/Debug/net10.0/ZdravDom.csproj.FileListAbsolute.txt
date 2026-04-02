@@ -29,5 +29,5 @@
 /home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ZdravDom.genruntimeconfig.cache
 /home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ref/ZdravDom.dll
 /home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ZdravDom.sourcelink.json
-/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/kmj3r09jnc-{0}-p1h51636vl-p1h51636vl.gz
-/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/1elo8oc3df-{0}-4y1s7tj30e-4y1s7tj30e.gz
+/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/kmj3r09jnc-{0}-t78beg6dak-t78beg6dak.gz
+/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/1elo8oc3df-{0}-nvt6pgsga1-nvt6pgsga1.gz

@@ -9,6 +9,7 @@
    - Sound waves animation
    - Form handling
    - Booking modal
+   - Global booking buttons override
 ═══════════════════════════════════════════════════════════ */
 
 /* ─── BOOKING MODAL (global functions) ─── */
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         counters.forEach(c => counterObserver.observe(c));
     }
 
-    /* ─── REVIEWS SLIDER ─── */
+    /* ─── REVIEWS SLIDER (исправлено для мобильных) ─── */
     const track = document.getElementById('reviewsTrack');
     const prevBtn = document.getElementById('reviewsPrev');
     const nextBtn = document.getElementById('reviewsNext');
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const total = cards.length;
         let current = 0;
 
-        if (dotsWrap) {
+        if (dotsWrap && total > 0) {
             cards.forEach((_, i) => {
                 const dot = document.createElement('button');
                 dot.className = 'reviews-dot' + (i === 0 ? ' active' : '');
@@ -195,20 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const updateDots = () => {
-            dotsWrap?.querySelectorAll('.reviews-dot').forEach((d, i) => {
+            if (!dotsWrap) return;
+            dotsWrap.querySelectorAll('.reviews-dot').forEach((d, i) => {
                 d.classList.toggle('active', i === current);
             });
         };
 
         const goTo = (idx) => {
+            if (total === 0) return;
             current = (idx + total) % total;
             const card = cards[current];
-            track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+            if (card) {
+                track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+            }
             updateDots();
         };
 
-        prevBtn?.addEventListener('click', () => goTo(current - 1));
-        nextBtn?.addEventListener('click', () => goTo(current + 1));
+        if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
 
         let isDragging = false, startX = 0, scrollLeft = 0;
         track.addEventListener('mousedown', e => {
@@ -234,8 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         track.addEventListener('scroll', () => {
+            if (cards.length === 0) return;
             const idx = Math.round(track.scrollLeft / (cards[0].offsetWidth + 24));
-            if (idx !== current) { current = Math.min(idx, total - 1); updateDots(); }
+            if (idx !== current && idx < total && idx >= 0) { 
+                current = idx; 
+                updateDots(); 
+            }
         }, { passive: true });
     }
 
@@ -347,26 +356,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ─── CONTACT FORM (main page inline form) ─── */
-    const form = document.getElementById('contactForm');
-    if (form) {
-        const submitBtn = document.getElementById('submitBtn');
-        const successEl = document.getElementById('formSuccess');
-
-        form.addEventListener('submit', async (e) => {
-            if (!submitBtn) return;
-            submitBtn.querySelector('.btn-text').style.display = 'none';
-            submitBtn.querySelector('.btn-loader').style.display = 'inline';
-            submitBtn.disabled = true;
-        });
-
-        if (successEl && successEl.dataset.show === 'true') {
-            successEl.style.display = 'flex';
+    /* ─── ГЛОБАЛЬНАЯ ОБРАБОТКА КНОПОК ЗАПИСИ ─── */
+    // Все элементы, которые содержат текст "Записаться" или имеют классы, связанные с записью, открывают модалку
+    const bookingSelectors = [
+        'a[href="#contact"]', 
+        'a[href="/#contact"]',
+        '.btn-cta:not([data-no-modal])',
+        '.btn-primary:not([data-no-modal])',
+        '[onclick*="openModal"]' // уже работают, но дублирование не страшно
+    ];
+    
+    function handleBookingClick(e) {
+        // Предотвращаем переход по ссылке
+        if (e.currentTarget.tagName === 'A') {
+            e.preventDefault();
         }
+        openModal();
     }
+    
+    document.querySelectorAll(bookingSelectors.join(',')).forEach(el => {
+        // Проверяем, не привязан ли уже обработчик, чтобы не дублировать
+        if (!el.hasAttribute('data-modal-bound')) {
+            el.addEventListener('click', handleBookingClick);
+            el.setAttribute('data-modal-bound', 'true');
+        }
+    });
+    
+    // Также находим все кнопки и ссылки с текстом "Записаться" (регистронезависимо)
+    const allElements = document.querySelectorAll('a, button');
+    allElements.forEach(el => {
+        const text = el.innerText.trim().toLowerCase();
+        if (text.includes('записаться') && !el.hasAttribute('data-modal-bound') && !el.closest('.service-card[data-href]')) {
+            // Исключаем карточки услуг, которые ведут на страницы специалистов (там кнопка "Подробнее", не мешает)
+            if (el.closest('.service-card') && el.closest('.service-card').getAttribute('data-href')) return;
+            el.addEventListener('click', (e) => {
+                if (el.tagName === 'A') e.preventDefault();
+                openModal();
+            });
+            el.setAttribute('data-modal-bound', 'true');
+        }
+    });
 
-    /* ─── SMOOTH SCROLL for anchor links ─── */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    /* ─── SMOOTH SCROLL for anchor links (кроме тех, что перехвачены выше) ─── */
+    document.querySelectorAll('a[href^="#"]:not([data-modal-bound])').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const id = this.getAttribute('href').slice(1);
             const target = document.getElementById(id);
@@ -407,5 +439,4 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal();
         });
     });
-
 });
