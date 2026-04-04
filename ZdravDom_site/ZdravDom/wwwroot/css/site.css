@@ -925,50 +925,71 @@ strong { font-weight: 600; }
 }
 
 /* ═══════════════════════════════════════════
-   REVIEWS SLIDER (исправлено для мобильных)
+   REVIEWS SLIDER (исправлено для ПК и мобильных)
 ═══════════════════════════════════════════ */
 .reviews-section {
     padding: clamp(4rem, 8vw, 8rem) 0;
     background: var(--c-cream);
-    overflow: hidden;
+    overflow: hidden; /* предотвращает появление горизонтального скролла страницы */
 }
-.reviews-track-wrap { position: relative; }
+
+.reviews-track-wrap {
+    position: relative;
+    overflow-x: auto;     /* родительский контейнер для прокрутки */
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
 .reviews-track {
     display: flex;
     gap: 1.5rem;
-    overflow-x: auto;
+    width: 100%;          /* ширина равна ширине родителя – это важно! */
+    overflow-x: auto;     /* внутренняя прокрутка при переполнении */
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 0.5rem 0 1rem;
     cursor: grab;
+    scrollbar-width: none; /* скрываем стандартный скроллбар, но прокрутка остаётся */
 }
-.reviews-track::-webkit-scrollbar { display: none; }
-.reviews-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+
+.reviews-track::-webkit-scrollbar {
+    display: none;
+}
+
+.reviews-track.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
 
 .review-card {
-    min-width: clamp(280px, 80vw, 500px);
     flex-shrink: 0;
+    width: clamp(280px, 80vw, 500px);
+    max-width: 100%;       /* гарантия, что карточка не вылезет за пределы */
     scroll-snap-align: start;
     background: var(--c-white);
     border-radius: var(--radius-lg);
     padding: 2rem;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--c-cream-dk);
+    /* Перенос текста */
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
+
 @media (max-width: 640px) {
     .review-card {
-        min-width: 85vw;
+        width: 85vw;
         padding: 1.5rem;
     }
 }
+
 .review-stars {
     color: var(--c-copper);
     font-size: 1rem;
     letter-spacing: 2px;
     margin-bottom: 1.2rem;
 }
+
 .review-card blockquote {
     font-family: var(--font-display);
     font-style: italic;
@@ -978,10 +999,26 @@ strong { font-weight: 600; }
     margin-bottom: 1.5rem;
     text-align: justify;
     hyphens: auto;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
-.review-author { border-top: 1px solid var(--c-cream-dk); padding-top: 1rem; }
-.review-name { font-weight: 600; font-size: 0.9rem; display: block; }
-.review-meta { font-size: 0.78rem; color: var(--c-text-lt); }
+
+.review-author {
+    border-top: 1px solid var(--c-cream-dk);
+    padding-top: 1rem;
+}
+
+.review-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.review-meta {
+    font-size: 0.78rem;
+    color: var(--c-text-lt);
+}
 
 .reviews-nav {
     display: flex;
@@ -990,8 +1027,10 @@ strong { font-weight: 600; }
     gap: 1rem;
     margin-top: 2rem;
 }
+
 .reviews-btn {
-    width: 44px; height: 44px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 1.5px solid var(--c-beige);
     color: var(--c-text-md);
@@ -1000,23 +1039,32 @@ strong { font-weight: 600; }
     justify-content: center;
     transition: all 0.2s;
 }
+
 .reviews-btn:hover {
     border-color: var(--c-forest);
     color: var(--c-forest);
     background: var(--c-cream-dk);
 }
-.reviews-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+
+.reviews-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .reviews-dot {
-    width: 6px; height: 6px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--c-beige);
     transition: background 0.2s, transform 0.2s;
 }
+
 .reviews-dot.active {
     background: var(--c-forest);
     transform: scale(1.4);
 }
-
 /* ═══════════════════════════════════════════
    FORMATS
 ═══════════════════════════════════════════ */
@@ -1550,4 +1598,18 @@ strong { font-weight: 600; }
 .specialist-hero-text h1,
 .specialist-hero-text .section-title {
     color: rgb(245, 239, 230) !important;
+}
+/* ─── Автопереносы в отзывах ─── */
+.reviews-section * {
+    hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Для самих цитат дополнительно обеспечим мягкие переносы */
+.review-card blockquote {
+    hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: justify; /* уже есть, оставляем */
 }
