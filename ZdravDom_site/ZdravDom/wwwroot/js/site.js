@@ -106,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeModal();
     });
 
+    
+
     /* ─── HEADER SCROLL ─── */
     const header = document.getElementById('siteHeader');
     const onScroll = () => {
