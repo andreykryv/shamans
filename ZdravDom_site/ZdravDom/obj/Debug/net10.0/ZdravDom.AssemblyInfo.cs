@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZdravDom")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7f295b3f04b7aa0faaeca036f2d61f645073788")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89c7c991c4159484ee24893bde2c8b0591a58356")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZdravDom")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZdravDom")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

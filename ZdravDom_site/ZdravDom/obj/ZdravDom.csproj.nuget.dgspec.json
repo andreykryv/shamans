@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/ZdravDom.csproj": {}
+    "/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/ZdravDom.csproj": {}
   },
   "projects": {
-    "/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/ZdravDom.csproj": {
+    "/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/ZdravDom.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/ZdravDom.csproj",
+        "projectUniqueName": "/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/ZdravDom.csproj",
         "projectName": "ZdravDom",
-        "projectPath": "/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/ZdravDom.csproj",
+        "projectPath": "/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/ZdravDom.csproj",
         "packagesPath": "/home/andrey/.nuget/packages/",
-        "outputPath": "/home/andrey/Загрузки/шаманы/ZdravDom_site/ZdravDom/obj/",
+        "outputPath": "/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/andrey/.nuget/NuGet/NuGet.Config"
