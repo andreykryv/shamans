@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="ЗдравДом — центр восстановления здоровья опорно-двигательного аппарата в Краснодаре. Хиропрактика, саунд-хилинг, телесные практики." />
     <title>@ViewData["Title"] — ЗдравДом</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,6 +10,210 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
     @await RenderSectionAsync("Styles", required: false)
+    <style>
+        /* ─── БАЗОВЫЕ СТИЛИ ДЛЯ ФУТЕРА И КАРТЫ ─── */
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 1.4fr 1.8fr;
+            gap: 2rem;
+        }
+
+        /* Карточка карты внутри колонки Контакты (мобильная/планшетная версия) */
+        .footer-map-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+        .footer-map-heading {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #b07840;
+            font-family: 'Raleway', sans-serif;
+        }
+        .footer-map-address-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            font-size: 0.85rem;
+            color: rgba(245,239,230,0.65);
+            line-height: 1.5;
+        }
+        .footer-map-address-line svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: #b07840;
+        }
+        .footer-map-frame {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            height: 200px;
+            background: #1e1a16;
+            border: 1px solid rgba(245,239,230,0.12);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+        }
+        .footer-map-frame iframe {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            border: none;
+            filter: saturate(0.8) brightness(0.92);
+            transition: filter 0.3s ease;
+        }
+        .footer-map-frame:hover iframe {
+            filter: saturate(1) brightness(1);
+        }
+        .footer-map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: rgba(245,239,230,0.45);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+            width: fit-content;
+        }
+        .footer-map-link:hover { color: #b07840; }
+
+        /* ─── ДЕСКТОПНАЯ ВЕРСИЯ: КАРТА ПОЛНОЙ ШИРИНЫ СВЕРХУ ─── */
+        .footer-map-desktop {
+            display: none; /* скрыта на мобильных/планшетах */
+            margin-bottom: 2.5rem;
+            width: 100%;
+        }
+        .footer-map-desktop .footer-map-block {
+            width: 100%;
+            gap: 1rem;
+        }
+        .footer-map-desktop .footer-map-frame {
+            width: 100%;
+            height: 300px; /* комфортная высота на ПК */
+        }
+        .footer-map-desktop .footer-map-heading {
+            font-size: 0.85rem;
+        }
+        .footer-map-desktop .footer-map-address-line {
+            font-size: 1rem;
+        }
+
+        @@media (min-width: 993px) {
+            /* на ПК показываем полноширинную карту сверху */
+            .footer-map-desktop {
+                display: block;
+            }
+            /* скрываем старую карту внутри колонки контактов */
+            .footer-col .footer-map-block {
+                display: none;
+            }
+            /* также можно немного адаптировать сетку футера */
+            .footer-inner {
+                grid-template-columns: 1.4fr 1.8fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Адаптив для планшетов и мобильных (карта остаётся внутри контактов) */
+        @@media (max-width: 992px) {
+            .footer-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem 1.5rem;
+            }
+            .footer-map-frame {
+                height: 210px;
+            }
+        }
+
+        @@media (max-width: 640px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .footer-map-frame {
+                height: 220px;
+            }
+            .footer-map-address-line {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Остальные стили футера */
+        .footer-brand .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        .footer-tagline {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.4;
+            max-width: 240px;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+        .footer-col {
+            flex: 1;
+            min-width: 140px;
+        }
+        .footer-col h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: #b07840;
+        }
+        .footer-col a, .footer-col span {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: rgba(245,239,230,0.7);
+            text-decoration: none;
+        }
+        .footer-col a:hover { color: #b07840; }
+        .footer-bottom {
+            margin-top: 2.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(245,239,230,0.08);
+            text-align: center;
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+        .footer-bottom .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        @@media (max-width: 540px) {
+            .footer-bottom .container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .site-footer {
+            background: #0f0d0b;
+            color: #f5efe6;
+            padding: 3rem 0 1rem;
+            font-family: 'Raleway', sans-serif;
+        }
+    </style>
 </head>
 <body>
 
@@ -38,14 +242,12 @@
             <button class="btn btn-cta header-cta" id="headerBookBtn" onclick="openModal()">Записаться</button>
 
             <div class="header-mobile-actions">
-                <!-- Telegram icon -->
                 <a href="https://t.me/tochkasborkiborea" class="header-social-btn" target="_blank" aria-label="Telegram">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M22 2L11 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
-
                 <button class="burger" id="burgerBtn" aria-label="Меню">
                     <span></span><span></span><span></span>
                 </button>
@@ -69,56 +271,123 @@
         @RenderBody()
     </main>
 
-    <!-- FOOTER -->
-   <footer class="site-footer" id="contacts">
-    <div class="container footer-inner">
-        <div class="footer-brand">
-            <a href="/" class="logo">
-                <span class="logo-icon">
-                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-                        <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.2"/>
-                        <path d="M16 6 C16 6, 22 12, 22 18 C22 21.3 19.3 24 16 24 C12.7 24 10 21.3 10 18 C10 12 16 6 16 6Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
-                        <path d="M10 14 Q16 11 22 14" stroke="currentColor" stroke-width="1" fill="none"/>
-                    </svg>
-                </span>
-                <span class="logo-text">ЗдравДом</span>
-            </a>
-            <p class="footer-tagline">Дом, где заботятся о вашем здоровье — от костей до нервной системы.</p>
-        </div>
-
-        <div class="footer-links">
-            <div class="footer-col">
-                <h4>Услуги</h4>
-                <a href="/kirill">Хиропрактика</a>
-                <a href="/denis">Саунд-хилинг</a>
-                <a href="/#services">Телесная терапия</a>
-                <a href="/#services">Групповые медитации</a>
-            </div>
-            <div class="footer-col">
-                <h4>Специалисты</h4>
-                <a href="/kirill">Кирилл</a>
-                <a href="/denis">Денис</a>
-            </div>
-            <div class="footer-col">
-                <h4>Контакты</h4>
-                <a href="tel:+79965357073">+7 (996) 535-70-73</a>
-                <a href="tel:+79952236999">+7 (995) 223-69-99</a>
-                <a href="mailto:Kirill.borea@gmail.com">Kirill.borea@gmail.com</a>
-                <span>г. Краснодар</span>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
+    <!-- FOOTER: на ПК карта отображается полноширинной строкой сверху, на мобильных — внутри колонки контактов -->
+    <footer class="site-footer" id="contacts">
         <div class="container">
-            <span>© @DateTime.Now.Year ЗдравДом. Все права защищены.</span>
-            <span>Краснодар · Здравница Садовое</span>
-        </div>
-    </div>
-</footer>
+            <!-- ДЕСКТОПНАЯ КАРТА (полная ширина, первая строка) -->
+            <div class="footer-map-desktop">
+                <div class="footer-map-block">
+                    <span class="footer-map-heading">Мы на карте</span>
+                    <div class="footer-map-address-line">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.8"/>
+                            <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        г. Краснодар, ул. Фрунзе, 161
+                    </div>
+                    <div class="footer-map-frame">
+                        <iframe
+                            src="https://yandex.ru/map-widget/v1/?ll=38.97956%2C45.03613&z=17&l=map&pt=38.97956%2C45.03613%2Cpm2rdm"
+                            width="100%"
+                            height="100%"
+                            style="border:0; display:block;"
+                            allowfullscreen="true"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="ЗдравДом — официальная карта, Краснодар, улица Фрунзе 161">
+                        </iframe>
+                    </div>
+                    <a href="https://yandex.ru/maps/?text=Краснодар%2C+улица+Фрунзе%2C+161&ll=38.97956%2C45.03613&z=17" 
+                       target="_blank" rel="noopener noreferrer" class="footer-map-link">
+                        <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Открыть в Яндекс Картах
+                    </a>
+                </div>
+            </div>
 
-    <!-- ══════════════════════════════════════════
-         BOOKING MODAL
-    ══════════════════════════════════════════ -->
+            <!-- Основная сетка футера (две колонки) -->
+            <div class="footer-inner">
+                <!-- Колонка 1: Бренд -->
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                                <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.2"/>
+                                <path d="M16 6 C16 6, 22 12, 22 18 C22 21.3 19.3 24 16 24 C12.7 24 10 21.3 10 18 C10 12 16 6 16 6Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                                <path d="M10 14 Q16 11 22 14" stroke="currentColor" stroke-width="1" fill="none"/>
+                            </svg>
+                        </span>
+                        <span class="logo-text">ЗдравДом</span>
+                    </a>
+                    <p class="footer-tagline">Дом, где заботятся о вашем здоровье — от костей до нервной системы.</p>
+                </div>
+
+                <!-- Колонка 2: Ссылки + контакты (на мобильных здесь же карта) -->
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Услуги</h4>
+                        <a href="/kirill">Хиропрактика</a>
+                        <a href="/denis">Саунд-хилинг</a>
+                        <a href="/#services">Телесная терапия</a>
+                        <a href="/#services">Групповые медитации</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Специалисты</h4>
+                        <a href="/kirill">Кирилл</a>
+                        <a href="/denis">Денис</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Контакты</h4>
+                        <!-- Мобильная/планшетная карта (скрывается на ПК) -->
+                        <div class="footer-map-block">
+                            <span class="footer-map-heading">Мы на карте</span>
+                            <div class="footer-map-address-line">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                г. Краснодар, ул. Фрунзе, 161
+                            </div>
+                            <div class="footer-map-frame">
+                                <iframe
+                                    src="https://yandex.ru/map-widget/v1/?ll=38.97956%2C45.03613&z=17&l=map&pt=38.97956%2C45.03613%2Cpm2rdm"
+                                    width="100%"
+                                    height="100%"
+                                    style="border:0; display:block;"
+                                    allowfullscreen="true"
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="ЗдравДом — карта, Краснодар, улица Фрунзе 161">
+                                </iframe>
+                            </div>
+                            <a href="https://yandex.ru/maps/?text=Краснодар%2C+улица+Фрунзе%2C+161&ll=38.97956%2C45.03613&z=17" 
+                               target="_blank" rel="noopener noreferrer" class="footer-map-link">
+                                <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Открыть в Яндекс Картах
+                            </a>
+                        </div>
+                        <!-- Контактные данные (телефоны, email) -->
+                        <a href="tel:+79965357073">+7 (996) 535-70-73</a>
+                        <a href="tel:+79952236999">+7 (995) 223-69-99</a>
+                        <a href="mailto:Kirill.borea@gmail.com">Kirill.borea@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <span>© @DateTime.Now.Year ЗдравДом. Все права защищены.</span>
+                <span>Краснодар · Здравница Садовое</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOOKING MODAL (без изменений) -->
     <div class="booking-modal" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
         <div class="modal-card">
@@ -145,19 +414,16 @@
                     <label for="modalName">Ваше имя</label>
                     <input type="text" id="modalName" placeholder="Иван Иванов" autocomplete="name"/>
                 </div>
-
                 <div class="form-group">
                     <label for="modalPhone">Номер телефона</label>
                     <input type="tel" id="modalPhone" placeholder="+7 (___) ___-__-__" autocomplete="tel"/>
                 </div>
-
                 <button class="btn btn-cta w-full btn-modal-submit" id="modalSubmit" onclick="submitModal()">
                     <span class="btn-text">Отправить заявку</span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
-
                 <p class="modal-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
             </div>
 
@@ -175,6 +441,104 @@
     </div>
 
     <script src="~/js/site.js"></script>
+    <script>
+        // Базовые функции для модального окна
+        window.openModal = function() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+        window.closeModal = function() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                const modalBody = document.getElementById('modalBody');
+                const modalSuccess = document.getElementById('modalSuccess');
+                if (modalBody && modalSuccess) {
+                    modalBody.style.display = 'block';
+                    modalSuccess.style.display = 'none';
+                }
+                const nameInput = document.getElementById('modalName');
+                const phoneInput = document.getElementById('modalPhone');
+                if (nameInput) nameInput.value = '';
+                if (phoneInput) phoneInput.value = '';
+            }
+        };
+        window.submitModal = function() {
+            const name = document.getElementById('modalName')?.value.trim();
+            const phone = document.getElementById('modalPhone')?.value.trim();
+            if (!name || !phone) {
+                alert('Пожалуйста, заполните имя и номер телефона');
+                return;
+            }
+            const modalBody = document.getElementById('modalBody');
+            const modalSuccess = document.getElementById('modalSuccess');
+            if (modalBody && modalSuccess) {
+                modalBody.style.display = 'none';
+                modalSuccess.style.display = 'flex';
+            }
+            setTimeout(() => {
+                if (document.getElementById('bookingModal')?.style.display === 'flex') {
+                    closeModal();
+                }
+            }, 2800);
+        };
+        // Мобильное меню
+        const burgerBtn = document.getElementById('burgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        window.closeMobileMenu = function() {
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (burgerBtn) burgerBtn.classList.remove('active');
+        };
+        if (burgerBtn && mobileMenu) {
+            burgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                burgerBtn.classList.toggle('active');
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('bookingModal');
+                if (modal && modal.style.display === 'flex') closeModal();
+            }
+        });
+        // Стили для модального окна (дополнительные, чтобы модалка отображалась корректно)
+        const styleModal = document.createElement('style');
+        styleModal.textContent = `
+            .booking-modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; z-index:2000; align-items:center; justify-content:center; }
+            .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); }
+            .modal-card { position: relative; background: #1f1b17; max-width: 460px; width: 90%; border-radius: 28px; box-shadow: 0 25px 40px rgba(0,0,0,0.5); z-index: 2001; padding: 1.8rem; border: 1px solid rgba(176,120,64,0.3); font-family: 'Raleway', sans-serif; }
+            .modal-close { position: absolute; top: 18px; right: 20px; background: none; border: none; color: #b07840; cursor: pointer; }
+            .modal-header { text-align: center; margin-bottom: 1.5rem; }
+            .modal-logo-icon { margin-bottom: 12px; color: #b07840; }
+            .modal-header h3 { font-size: 1.6rem; margin-bottom: 0.3rem; color:#f5efe6; }
+            .modal-sub { font-size: 0.85rem; opacity: 0.7; }
+            .form-group { margin-bottom: 1.2rem; }
+            .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; color:#b07840; }
+            .form-group input { width: 100%; background: #2c2620; border: 1px solid rgba(176,120,64,0.4); padding: 12px 16px; border-radius: 40px; color: #f5efe6; font-size: 1rem; outline: none; transition: 0.2s; }
+            .form-group input:focus { border-color: #b07840; }
+            .btn-cta { background: #b07840; border: none; padding: 12px 24px; border-radius: 40px; color: #0f0d0b; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+            .w-full { width: 100%; justify-content: center; }
+            .btn-modal-submit { margin-top: 0.8rem; background: #c28a4b; }
+            .modal-note { font-size: 0.65rem; text-align: center; margin-top: 1rem; opacity: 0.5; }
+            .modal-success { display: none; flex-direction: column; align-items: center; text-align: center; padding: 1rem 0; }
+            .success-checkmark { color: #b07840; margin-bottom: 1rem; }
+            .mobile-menu { position: fixed; top: 0; right: -100%; width: 75%; max-width: 300px; height: 100%; background: #12100e; z-index: 1050; transition: 0.3s; padding: 80px 24px 24px; box-shadow: -5px 0 30px rgba(0,0,0,0.5); }
+            .mobile-menu.active { right: 0; }
+            .burger { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+            .burger span { width: 22px; height: 2px; background: #f5efe6; transition: 0.2s; }
+            .header-mobile-actions { display: flex; align-items: center; gap: 12px; }
+            @@media (min-width: 769px) { .burger, .header-mobile-actions .header-social-btn { display: none; } .mobile-menu { display: none; } }
+            @@media (max-width: 768px) { .main-nav, .header-cta { display: none; } .header-mobile-actions { display: flex; } }
+            .mt-2 { margin-top: 1rem; }
+        `;
+        document.head.appendChild(styleModal);
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
