@@ -47,10 +47,7 @@
         </div>
     </div>
 
-    <a href="#services" class="hero-scroll-hint">
-        <span>Листайте вниз</span>
-        <div class="scroll-line"></div>
-    </a>
+    
 </section>
 
 <!-- ══════════════════════════════════════════
@@ -138,7 +135,9 @@
 
         <div class="services-grid">
 
-            <div class="service-card reveal-up delay-1" data-href="/kirill">
+            <!-- Карточка 1: Хиропрактика -->
+            <!-- Удалён data-href, чтобы при клике на карточку не было перехода, только выделение -->
+            <div class="service-card reveal-up delay-1">
                 <div class="service-card-inner">
                     <div class="service-num">01</div>
                     <div class="service-icon">
@@ -156,11 +155,14 @@
                         <span>Сколиоз</span>
                         <span>ЖКТ</span>
                     </div>
-                   <a href="/kirill" class="btn btn-glow-outline w-full">Подробнее</a>
+                    <!-- Переход только по этой кнопке -->
+                    <a href="/kirill" class="btn btn-glow-outline w-full">Подробнее</a>
                 </div>
             </div>
 
-            <div class="service-card reveal-up delay-2" data-href="/denis">
+            <!-- Карточка 2: Саунд-хилинг -->
+            <!-- Удалён data-href, чтобы при клике на карточку не было перехода, только выделение -->
+            <div class="service-card reveal-up delay-2">
                 <div class="service-card-inner">
                     <div class="service-num">02</div>
                     <div class="service-icon">
@@ -172,17 +174,19 @@
                         </svg>
                     </div>
                     <h3>Саунд-хилинг</h3>
-                    <p>Тибетские поющие чаши, гонги и колокола — звуковые вибрации проходят вглубь тела, снимая нервное напряжение и психосоматические мышечные блоки.</p>
+                    <p>Тибетские поющие чаши, гонги и колока — звуковые вибрации проходят вглубь тела, снимая нервное напряжение и психосоматические мышечные блоки.</p>
                     <div class="service-tags">
                         <span>Стресс</span>
                         <span>Бессонница</span>
                         <span>Апатия</span>
                         <span>Нервная система</span>
                     </div>
-                 <a href="/denis" class="btn btn-glow-outline w-full">Подробнее</a>
+                    <!-- Переход только по этой кнопке -->
+                    <a href="/denis" class="btn btn-glow-outline w-full">Подробнее</a>
                 </div>
             </div>
 
+            <!-- Карточка 3: Телесная терапия (без изменений, выделение при клике, кнопка вызывает модалку) -->
             <div class="service-card reveal-up delay-3">
                 <div class="service-card-inner">
                     <div class="service-num">03</div>
@@ -200,14 +204,15 @@
                         <span>Движение</span>
                     </div>
                     <button class="btn btn-cta" onclick="openModal()">
-    Записаться
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-</button>
+                        Записаться
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
+            <!-- Карточка 4: Групповые медитации (без изменений, выделение при клике, кнопка вызывает модалку) -->
             <div class="service-card reveal-up delay-4">
                 <div class="service-card-inner">
                     <div class="service-num">04</div>
@@ -226,12 +231,12 @@
                         <span>Чайная церемония</span>
                         <span>Сообщество</span>
                     </div>
-                   <button class="btn btn-cta" onclick="openModal()">
-            Записаться
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
+                    <button class="btn btn-cta" onclick="openModal()">
+                        Записаться
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -268,7 +273,7 @@
                         <span>Висцеральная терапия</span>
                         <span>Хиропрактика</span>
                     </div>
-              <a href="/kirill" class="btn btn-outline-glow w-full">О специалисте</a>
+                   <a href="/kirill" class="btn btn-outline-glow w-full">О специалисте</a>
                 </div>
             </div>
 
@@ -290,7 +295,7 @@
                         <span>Медитации</span>
                         <span>Ретриты</span>
                     </div>
-              <a href="/denis" class="btn btn-outline-glow w-full">О специалисте</a>
+                    <a href="/denis" class="btn btn-outline-glow w-full">О специалисте</a>
                 </div>
             </div>
 

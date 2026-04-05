@@ -27,6 +27,10 @@ function openModal() {
 }
 
 function closeModal() {
+    if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+    }
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
     modal.classList.remove('open');
@@ -53,6 +57,7 @@ function closeMobileMenu() {
     if (burgerBtn) burgerBtn.classList.remove('open');
     if (mobileMenu) mobileMenu.classList.remove('open');
 }
+let closeTimer = null;
 
 function submitModal() {
     const nameEl = document.getElementById('modalName');
@@ -62,18 +67,19 @@ function submitModal() {
     if (!nameEl || !phoneEl) return;
 
     const name = nameEl.value.trim();
-    const phone = phoneEl.value.trim();
+    const rawPhone = phoneEl.value.replace(/\D/g, '');
+    const phoneDigits = rawPhone.slice(1); // убираем +7
 
     if (!name) {
         nameEl.focus();
         nameEl.style.borderColor = '#c0392b';
-        setTimeout(() => { nameEl.style.borderColor = ''; }, 2000);
+        setTimeout(() => nameEl.style.borderColor = '', 2000);
         return;
     }
-    if (!phone || phone.length < 12) {
+    if (phoneDigits.length !== 10) {
         phoneEl.focus();
         phoneEl.style.borderColor = '#c0392b';
-        setTimeout(() => { phoneEl.style.borderColor = ''; }, 2000);
+        setTimeout(() => phoneEl.style.borderColor = '', 2000);
         return;
     }
 
@@ -81,6 +87,8 @@ function submitModal() {
         submitBtn.disabled = true;
         submitBtn.querySelector('.btn-text').textContent = 'Отправляем…';
     }
+
+    if (closeTimer) clearTimeout(closeTimer);
 
     setTimeout(() => {
         const body = document.getElementById('modalBody');
@@ -95,7 +103,7 @@ function submitModal() {
             const textEl = submitBtn.querySelector('.btn-text');
             if (textEl) textEl.textContent = 'Отправить заявку';
         }
-        setTimeout(() => closeModal(), 3000);
+        closeTimer = setTimeout(() => closeModal(), 3000);
     }, 800);
 }
 
@@ -105,8 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
     });
-
-    
 
     /* ─── HEADER SCROLL ─── */
     const header = document.getElementById('siteHeader');
@@ -391,30 +397,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ─── ОБРАБОТКА КНОПКИ "КОНТАКТЫ" — плавный скролл к футеру и подсветка ─── */
     function scrollToContacts() {
-        const contactsSection = document.getElementById('contacts');
-        if (contactsSection) {
-            const offset = contactsSection.getBoundingClientRect().top + window.scrollY - 80;
+    const contactsSection = document.getElementById('contact');
+    if (contactsSection) {
+        const offset = contactsSection.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+        contactsSection.style.transition = 'background 0.5s';
+        contactsSection.style.backgroundColor = 'rgba(176,120,64,0.2)';
+        setTimeout(() => contactsSection.style.backgroundColor = '', 1000);
+    } else {
+        const footer = document.querySelector('.site-footer');
+        if (footer) {
+            const offset = footer.getBoundingClientRect().top + window.scrollY - 80;
             window.scrollTo({ top: offset, behavior: 'smooth' });
-            // Подсветка
-            contactsSection.style.transition = 'background 0.5s';
-            contactsSection.style.backgroundColor = 'rgba(176,120,64,0.2)';
-            setTimeout(() => {
-                contactsSection.style.backgroundColor = '';
-            }, 1000);
-        } else {
-            // fallback: ищем footer
-            const footer = document.querySelector('.site-footer');
-            if (footer) {
-                const offset = footer.getBoundingClientRect().top + window.scrollY - 80;
-                window.scrollTo({ top: offset, behavior: 'smooth' });
-                footer.style.transition = 'background 0.5s';
-                footer.style.backgroundColor = 'rgba(176,120,64,0.2)';
-                setTimeout(() => {
-                    footer.style.backgroundColor = '';
-                }, 1000);
-            }
+            footer.style.transition = 'background 0.5s';
+            footer.style.backgroundColor = 'rgba(176,120,64,0.2)';
+            setTimeout(() => footer.style.backgroundColor = '', 1000);
         }
     }
+}
 
     // Находим все ссылки с якорем #contact или текстом "Контакты"
     const contactLinks = document.querySelectorAll('a[href="#contact"], a[href="/#contact"], a.nav-link[href*="contact"]');

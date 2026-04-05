@@ -58,10 +58,7 @@ body {
     background: var(--c-cream);
     line-height: 1.7;
     overflow-x: hidden;
-    user-select: none; /* запрет выделения текста */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    
 }
 
 /* разрешаем выделение только в полях ввода */
@@ -433,8 +430,9 @@ strong { font-weight: 600; }
 .hero-content {
     position: relative;
     z-index: 2;
-    padding-top: calc(var(--nav-h) + 2rem);
+    padding-top: calc((var(--nav-h) + 2rem) / 1.5);
     padding-bottom: 6rem;
+
 }
 .hero-badge {
     display: inline-flex;
@@ -445,7 +443,7 @@ strong { font-weight: 600; }
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(245,239,230,0.75);
-    margin-bottom: 1.8rem;
+    margin-bottom: 0.8rem;
 }
 .pulse-dot {
     width: 8px; height: 8px;
@@ -488,28 +486,7 @@ strong { font-weight: 600; }
 .stat-label { display: block; font-size: 0.78rem; color: rgba(245,239,230,0.55); letter-spacing: 0.08em; margin-top: 4px; }
 .stat-divider { width: 1px; height: 40px; background: rgba(245,239,230,0.15); }
 
-/* Исправлено наложение подсказки "Листайте вниз" — смещена ниже */
-.hero-scroll-hint {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: rgba(245,239,230,0.4);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    z-index: 2;
-    animation: float 3s ease-in-out infinite;
-    background: rgba(0,0,0,0.3);
-    padding: 6px 12px;
-    border-radius: 30px;
-    backdrop-filter: blur(4px);
-    white-space: nowrap;
-}
+
 @keyframes float {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-8px); }
@@ -520,13 +497,7 @@ strong { font-weight: 600; }
     background: linear-gradient(to bottom, rgba(245,239,230,0.4), transparent);
 }
 
-@media (max-width: 768px) {
-    .hero-scroll-hint {
-        bottom: 0.8rem;
-        font-size: 0.6rem;
-        padding: 4px 10px;
-    }
-}
+
 
 /* ═══════════════════════════════════════════
    ABOUT SECTION
@@ -664,7 +635,7 @@ strong { font-weight: 600; }
     font-family: var(--font-display);
     font-size: 3.5rem;
     font-weight: 300;
-    color: rgba(245,239,230,0.85); /* Цвет основного текста карточек */
+     color: rgba(245,239,230,0.85); /* Цвет основного текста карточек */
     line-height: 1;
     margin-bottom: 1.2rem;
 }
@@ -925,71 +896,50 @@ strong { font-weight: 600; }
 }
 
 /* ═══════════════════════════════════════════
-   REVIEWS SLIDER (исправлено для ПК и мобильных)
+   REVIEWS SLIDER (исправлено для мобильных)
 ═══════════════════════════════════════════ */
 .reviews-section {
     padding: clamp(4rem, 8vw, 8rem) 0;
     background: var(--c-cream);
-    overflow: hidden; /* предотвращает появление горизонтального скролла страницы */
+    overflow: hidden;
 }
-
-.reviews-track-wrap {
-    position: relative;
-    overflow-x: auto;     /* родительский контейнер для прокрутки */
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
-}
-
+.reviews-track-wrap { position: relative; }
 .reviews-track {
     display: flex;
     gap: 1.5rem;
-    width: 100%;          /* ширина равна ширине родителя – это важно! */
-    overflow-x: auto;     /* внутренняя прокрутка при переполнении */
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.5rem 0 1rem;
     cursor: grab;
-    scrollbar-width: none; /* скрываем стандартный скроллбар, но прокрутка остаётся */
 }
-
-.reviews-track::-webkit-scrollbar {
-    display: none;
-}
-
-.reviews-track.dragging {
-    cursor: grabbing;
-    scroll-behavior: auto;
-}
+.reviews-track::-webkit-scrollbar { display: none; }
+.reviews-track.dragging { cursor: grabbing; scroll-behavior: auto; }
 
 .review-card {
+    min-width: clamp(280px, 80vw, 500px);
     flex-shrink: 0;
-    width: clamp(280px, 80vw, 500px);
-    max-width: 100%;       /* гарантия, что карточка не вылезет за пределы */
     scroll-snap-align: start;
     background: var(--c-white);
     border-radius: var(--radius-lg);
     padding: 2rem;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--c-cream-dk);
-    /* Перенос текста */
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
-
 @media (max-width: 640px) {
     .review-card {
-        width: 85vw;
+        min-width: 85vw;
         padding: 1.5rem;
     }
 }
-
 .review-stars {
     color: var(--c-copper);
     font-size: 1rem;
     letter-spacing: 2px;
     margin-bottom: 1.2rem;
 }
-
 .review-card blockquote {
     font-family: var(--font-display);
     font-style: italic;
@@ -999,26 +949,10 @@ strong { font-weight: 600; }
     margin-bottom: 1.5rem;
     text-align: justify;
     hyphens: auto;
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
-
-.review-author {
-    border-top: 1px solid var(--c-cream-dk);
-    padding-top: 1rem;
-}
-
-.review-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: block;
-}
-
-.review-meta {
-    font-size: 0.78rem;
-    color: var(--c-text-lt);
-}
+.review-author { border-top: 1px solid var(--c-cream-dk); padding-top: 1rem; }
+.review-name { font-weight: 600; font-size: 0.9rem; display: block; }
+.review-meta { font-size: 0.78rem; color: var(--c-text-lt); }
 
 .reviews-nav {
     display: flex;
@@ -1027,10 +961,8 @@ strong { font-weight: 600; }
     gap: 1rem;
     margin-top: 2rem;
 }
-
 .reviews-btn {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     border: 1.5px solid var(--c-beige);
     color: var(--c-text-md);
@@ -1039,32 +971,23 @@ strong { font-weight: 600; }
     justify-content: center;
     transition: all 0.2s;
 }
-
 .reviews-btn:hover {
     border-color: var(--c-forest);
     color: var(--c-forest);
     background: var(--c-cream-dk);
 }
-
-.reviews-dots {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
+.reviews-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
 .reviews-dot {
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--c-beige);
     transition: background 0.2s, transform 0.2s;
 }
-
 .reviews-dot.active {
     background: var(--c-forest);
     transform: scale(1.4);
 }
+
 /* ═══════════════════════════════════════════
    FORMATS
 ═══════════════════════════════════════════ */
@@ -1599,50 +1522,6 @@ strong { font-weight: 600; }
 .specialist-hero-text .section-title {
     color: rgb(245, 239, 230) !important;
 }
-/* ─── Автопереносы в отзывах ─── */
-.reviews-section * {
-    hyphens: auto;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Для самих цитат дополнительно обеспечим мягкие переносы */
-.review-card blockquote {
-    hyphens: auto;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    text-align: justify; /* уже есть, оставляем */
-}
-/* Кнопка с обводкой и свечением (светлый текст) */
-.btn-glow-outline {
-    background: transparent;
-    color: var(--c-cream) !important;
-    border: 1.5px solid rgba(245, 239, 230, 0.6);
-    box-shadow: 0 0 8px rgba(245, 239, 230, 0.4), 0 0 2px rgba(245, 239, 230, 0.6);
-    transition: all 0.3s var(--ease-out-quint);
-}
-.btn-glow-outline:hover {
-    background: rgba(245, 239, 230, 0.1);
-    border-color: var(--c-cream);
-    box-shadow: 0 0 16px rgba(245, 239, 230, 0.7);
-    transform: translateY(-2px);
-}
-
-/* Кнопка "О специалисте" — исходный цвет + свечение + ширина */
-.btn-outline-glow {
-    background: transparent;
-    color: var(--c-forest) !important;
-    border: 1.5px solid var(--c-forest);
-    box-shadow: 0 0 6px rgba(26, 46, 30, 0.3), 0 0 2px rgba(26, 46, 30, 0.5);
-    transition: all 0.3s var(--ease-out-quint);
-}
-.btn-outline-glow:hover {
-    background: var(--c-forest);
-    color: var(--c-cream) !important;
-    border-color: var(--c-forest);
-    box-shadow: 0 0 14px rgba(26, 46, 30, 0.6);
-    transform: translateY(-2px);
-}
 @media (min-width: 768px) and (max-width: 1024px) {
     /* Карточки специалистов: фото крупно, текст снизу */
     .specialist-card {
@@ -1704,4 +1583,101 @@ strong { font-weight: 600; }
         grid-template-columns: repeat(2, 1fr);
         gap: 1.8rem;
     }
+}
+.review-card {
+    max-width: 300px;    /* Ограничьте ширину, чтобы эффект был заметен */
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.review-card blockquote {
+    margin: 0;
+    font-style: italic;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.btn-glow-outline {
+    background: transparent;
+    color: var(--c-cream) !important;
+    border: 1.5px solid rgba(245, 239, 230, 0.6);
+    box-shadow: 0 0 8px rgba(245, 239, 230, 0.4), 0 0 2px rgba(245, 239, 230, 0.6);
+    transition: all 0.3s var(--ease-out-quint);
+}
+.btn-glow-outline:hover {
+    background: rgba(245, 239, 230, 0.1);
+    border-color: var(--c-cream);
+    box-shadow: 0 0 16px rgba(245, 239, 230, 0.7);
+    transform: translateY(-2px);
+}
+
+/* Кнопка "О специалисте" — исходный цвет + свечение + ширина */
+.btn-outline-glow {
+    background: transparent;
+    color: var(--c-forest) !important;
+    border: 1.5px solid var(--c-forest);
+    box-shadow: 0 0 6px rgba(26, 46, 30, 0.3), 0 0 2px rgba(26, 46, 30, 0.5);
+    transition: all 0.3s var(--ease-out-quint);
+}
+.btn-outline-glow:hover {
+    background: var(--c-forest);
+    color: var(--c-cream) !important;
+    border-color: var(--c-forest);
+    box-shadow: 0 0 14px rgba(26, 46, 30, 0.6);
+    transform: translateY(-2px);
+}
+/* Тёмная тема модального окна */
+.booking-modal .modal-card {
+    background: #1f1b17;
+    border: 1px solid rgba(176,120,64,0.3);
+}
+.booking-modal .modal-close { color: #b07840; }
+.booking-modal .modal-header h3 { color: #f5efe6; }
+.booking-modal .modal-sub { color: rgba(245,239,230,0.6); }
+.booking-modal .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    color: #b07840;
+}
+.booking-modal .form-group input {
+    width: 100%;
+    background: #2c2620;
+    border: 1px solid rgba(176,120,64,0.4);
+    padding: 12px 16px;
+    border-radius: 40px;
+    color: #f5efe6;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.booking-modal .form-group input:focus { border-color: #b07840; }
+.booking-modal .modal-note {
+    font-size: 0.65rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: rgba(245,239,230,0.4);
+}
+/* Оверлей для мобильного меню */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1049;
+}
+.mobile-menu-overlay.open { display: block; }
+/* Цвета для карты в подвале */
+.footer-map-heading {
+    color: #b07840; /* золотистый/медный */
+}
+
+.footer-map-address-line {
+    color: #ffffff; /* белый */
+}
+.footer-map-link {
+    color: #ffffff; /* белый цвет текста и иконки */
 }
