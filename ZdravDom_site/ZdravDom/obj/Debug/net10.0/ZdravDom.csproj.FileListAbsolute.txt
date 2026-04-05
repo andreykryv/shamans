@@ -20,7 +20,6 @@
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/scopedcss/bundle/ZdravDom.styles.css
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/kmj3r09jnc-{0}-3rtfm791tq-3rtfm791tq.gz
-/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/1elo8oc3df-{0}-08uwg4wjlg-08uwg4wjlg.gz
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/staticwebassets.build.json
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/staticwebassets.build.json.cache
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/staticwebassets.development.json
@@ -31,3 +30,4 @@
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ZdravDom.pdb
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ZdravDom.genruntimeconfig.cache
 /home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/ref/ZdravDom.dll
+/home/andrey/Загрузки/шаманы/shamans/ZdravDom_site/ZdravDom/obj/Debug/net10.0/compressed/1elo8oc3df-{0}-no0prmyw25-no0prmyw25.gz

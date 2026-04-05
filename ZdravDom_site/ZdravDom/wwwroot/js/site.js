@@ -177,80 +177,142 @@ document.addEventListener('DOMContentLoaded', () => {
         counters.forEach(c => counterObserver.observe(c));
     }
 
-    /* ─── REVIEWS SLIDER (исправлено для мобильных) ─── */
-    const track = document.getElementById('reviewsTrack');
-    const prevBtn = document.getElementById('reviewsPrev');
-    const nextBtn = document.getElementById('reviewsNext');
-    const dotsWrap = document.getElementById('reviewsDots');
+   /* ─── REVIEWS SLIDER — ровно одна карточка за свайп, бесконечная цикличность ─── */
+const track = document.getElementById('reviewsTrack');
+const prevBtn = document.getElementById('reviewsPrev');
+const nextBtn = document.getElementById('reviewsNext');
+const dotsWrap = document.getElementById('reviewsDots');
 
-    if (track) {
-        const cards = track.querySelectorAll('.review-card');
-        const total = cards.length;
-        let current = 0;
+if (track) {
+    const cards = Array.from(track.querySelectorAll('.review-card'));
+    const total = cards.length;
+    let currentIndex = 0;
+    let isTransitioning = false;   // блокировка повторных вызовов во время анимации
 
-        if (dotsWrap && total > 0) {
-            cards.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'reviews-dot' + (i === 0 ? ' active' : '');
-                dot.setAttribute('aria-label', `Отзыв ${i + 1}`);
-                dot.addEventListener('click', () => goTo(i));
-                dotsWrap.appendChild(dot);
-            });
-        }
-
-        const updateDots = () => {
-            if (!dotsWrap) return;
-            dotsWrap.querySelectorAll('.reviews-dot').forEach((d, i) => {
-                d.classList.toggle('active', i === current);
-            });
-        };
-
-        const goTo = (idx) => {
-            if (total === 0) return;
-            current = (idx + total) % total;
-            const card = cards[current];
-            if (card) {
-                track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
-            }
-            updateDots();
-        };
-
-        if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
-        if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
-
-        let isDragging = false, startX = 0, scrollLeft = 0;
-        track.addEventListener('mousedown', e => {
-            isDragging = true;
-            track.classList.add('dragging');
-            startX = e.pageX - track.offsetLeft;
-            scrollLeft = track.scrollLeft;
+    // 1. Создаём точки (dots)
+    if (dotsWrap && total > 0) {
+        cards.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'reviews-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Отзыв ${i + 1}`);
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsWrap.appendChild(dot);
         });
-        track.addEventListener('mouseleave', () => { isDragging = false; track.classList.remove('dragging'); });
-        track.addEventListener('mouseup', () => { isDragging = false; track.classList.remove('dragging'); });
-        track.addEventListener('mousemove', e => {
-            if (!isDragging) return;
-            e.preventDefault();
-            const x = e.pageX - track.offsetLeft;
-            track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-        });
-
-        let touchStart = 0;
-        track.addEventListener('touchstart', e => { touchStart = e.touches[0].clientX; }, { passive: true });
-        track.addEventListener('touchend', e => {
-            const diff = touchStart - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-        }, { passive: true });
-
-        track.addEventListener('scroll', () => {
-            if (cards.length === 0) return;
-            const idx = Math.round(track.scrollLeft / (cards[0].offsetWidth + 24));
-            if (idx !== current && idx < total && idx >= 0) { 
-                current = idx; 
-                updateDots(); 
-            }
-        }, { passive: true });
     }
 
+    function updateDots() {
+        if (!dotsWrap) return;
+        dotsWrap.querySelectorAll('.reviews-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    // 2. Основная функция переключения слайда
+    function goToSlide(newIndex, smooth = true) {
+        if (isTransitioning || total === 0) return;
+        newIndex = ((newIndex % total) + total) % total;
+        if (newIndex === currentIndex) return;
+
+        isTransitioning = true;
+        currentIndex = newIndex;
+        const targetCard = cards[currentIndex];
+        const targetLeft = targetCard.offsetLeft - track.offsetLeft;
+
+        track.scrollTo({
+            left: targetLeft,
+            behavior: smooth ? 'smooth' : 'auto'
+        });
+
+        updateDots();
+
+        // Разблокируем после окончания анимации
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 500); // таймаут соответствует длительности smooth-прокрутки
+    }
+
+    // 3. Обработка кнопок
+    if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+    // 4. Обработка свайпов / драга (мышь и тач)
+    let startX = 0;
+    let startScrollLeft = 0;
+    let isDragging = false;
+    let dragThreshold = 50; // минимальное смещение для срабатывания
+
+    function onPointerStart(e) {
+        if (isTransitioning) return;
+        // Получаем координату X (поддерживаем мышь и тач)
+        const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+        startX = clientX;
+        startScrollLeft = track.scrollLeft;
+        isDragging = true;
+        track.style.scrollSnapType = 'none'; // отключаем привязку на время драга
+        track.style.overflowX = 'auto';
+    }
+
+    function onPointerMove(e) {
+        if (!isDragging || isTransitioning) return;
+        // Активно не перемещаем скролл — только отслеживаем направление в конце
+        // Но чтобы визуально карточка не дёргалась, можно ничего не делать.
+        // Альтернатива: разрешить минимальный сдвиг, но для жёсткого контроля одной карточки лучше не позволять "полу-свайп".
+        e.preventDefault(); // предотвращаем нативный скролл на тач-устройствах
+    }
+
+    function onPointerEnd(e) {
+        if (!isDragging || isTransitioning) {
+            isDragging = false;
+            return;
+        }
+        const clientX = e.type.startsWith('touch') ? e.changedTouches[0].clientX : e.clientX;
+        const deltaX = clientX - startX;
+
+        if (Math.abs(deltaX) > dragThreshold) {
+            if (deltaX > 0) {
+                // свайп вправо -> предыдущий слайд
+                goToSlide(currentIndex - 1);
+            } else {
+                // свайп влево -> следующий слайд
+                goToSlide(currentIndex + 1);
+            }
+        } else {
+            // если свайп слишком короткий — просто прилипаем к текущему слайду
+            const targetLeft = cards[currentIndex].offsetLeft - track.offsetLeft;
+            track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        }
+
+        isDragging = false;
+        track.style.scrollSnapType = ''; // восстанавливаем (если нужно)
+    }
+
+    // Вешаем обработчики на мышь
+    track.addEventListener('mousedown', onPointerStart);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerEnd);
+
+    // Вешаем обработчики на тач-события
+    track.addEventListener('touchstart', onPointerStart, { passive: false });
+    track.addEventListener('touchmove', onPointerMove, { passive: false });
+    track.addEventListener('touchend', onPointerEnd);
+
+    // 5. Отключаем инерционный скролл, чтобы пользователь не мог прокрутить больше одной карточки
+    track.style.scrollSnapType = 'x mandatory';
+    cards.forEach(card => {
+        card.style.scrollSnapAlign = 'start';
+    });
+
+    // 6. Блокируем нажатие на кнопки, если идёт анимация
+    const allButtons = [prevBtn, nextBtn].filter(Boolean);
+    allButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (isTransitioning) e.preventDefault();
+        });
+    });
+
+    // 7. Инициализация: принудительно встаём на первый слайд
+    goToSlide(0, false);
+}
     /* ─── HERO PARTICLES ─── */
     const particleContainer = document.getElementById('heroParticles');
     if (particleContainer) {
